@@ -11,6 +11,9 @@ from factorioproject.blueprint import (
     blueprint_to_dataframe,
     decode_blueprint,
     encode_blueprint,
+    extract_blueprint,
+    get_book_blueprints_summary,
+    is_blueprint_book,
 )
 from factorioproject.mcdm import (
     AHPModel,
@@ -19,7 +22,9 @@ from factorioproject.mcdm import (
 from factorioproject.network_flow import (
     analyze_bottlenecks,
     create_factory_network,
+    create_petrochemical_network,
     plot_network_bottlenecks,
+    plot_petrochemical_network,
     solve_max_network_flow,
 )
 from factorioproject.optimization import (
@@ -49,9 +54,11 @@ __all__ = [
     "solve_production_allocation",
     "parametric_power_sweep",
     "create_factory_network",
+    "create_petrochemical_network",
     "solve_max_network_flow",
     "analyze_bottlenecks",
     "plot_network_bottlenecks",
+    "plot_petrochemical_network",
     "solve_transportation_model",
     "solve_goal_programming",
     "AHPModel",

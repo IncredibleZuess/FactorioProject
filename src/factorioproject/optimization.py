@@ -47,7 +47,47 @@ class ProductionProblemConfig:
     furnace_fuel_kw: float = 90.0  # Burner power
     assembler_electric_kw: float = 75.0  # Assembling Machine 1 electric
     inserter_electric_kw: float = 13.0  # Regular inserter
-    base_logistics_power_kw: float = 48 * 13.0  # 48 inserters from blueprint = 624 kW
+    base_logistics_power_kw: float = 48 * 13.0  # Inserters baseline power
+
+    @classmethod
+    def from_blueprint_metrics(
+        cls, metrics: Dict[str, Any], raw_belt_count: float = 8.0
+    ) -> ProductionProblemConfig:
+        """Create a scaled problem configuration directly from parsed blueprint layout metrics."""
+        furnaces = metrics.get("furnaces", {})
+        mfg = metrics.get("manufacturing", {})
+        power = metrics.get("power_grid", {})
+        logistics = metrics.get("logistics", {})
+
+        total_furnaces = furnaces.get("total_count", 374)
+        total_assemblers = (
+            mfg.get("assembling_machine_1", 89)
+            + mfg.get("assembling_machine_2", 142)
+            + mfg.get("assembling_machine_3", 0)
+        )
+        if total_assemblers == 0:
+            total_assemblers = 20
+
+        # Power generation capacity from steam engines in kW
+        power_gen_mw = power.get("power_generation_mw", 54.9)
+        power_limit_kw = (power_gen_mw * 1000.0) if power_gen_mw > 0 else 60000.0
+
+        # Raw material supply based on number of input belts (15 items/sec per yellow belt)
+        raw_ore_cap = raw_belt_count * 15.0
+
+        # Baseline inserter electric load in kW
+        inserters_count = logistics.get("inserters_count", 1693)
+        logistics_kw = inserters_count * 13.0
+
+        return cls(
+            num_stone_furnaces=total_furnaces,
+            num_assemblers=total_assemblers,
+            iron_ore_capacity=raw_ore_cap,
+            copper_ore_capacity=raw_ore_cap,
+            coal_capacity=raw_ore_cap / 2.0,
+            power_limit_kw=power_limit_kw,
+            base_logistics_power_kw=logistics_kw,
+        )
 
 
 def solve_production_allocation(
@@ -273,7 +313,8 @@ def parametric_power_sweep(
         config = ProductionProblemConfig()
 
     if power_range is None:
-        power_range = list(range(650, 1600, 50))
+        p_base = config.power_limit_kw
+        power_range = [round(float(p), 1) for p in np.linspace(p_base * 0.45, p_base * 1.20, 16)]
 
     records = []
     for p in power_range:
