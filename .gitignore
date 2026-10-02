@@ -1,0 +1,29 @@
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+# --- uv / Python Virtual Environments ---
+.venv/
+
+# --- Python Build Artifacts ---
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+wheels/
+*.egg-info/
+
+# --- Environment Variables (Secrets) ---
+.env
+
+# --- Optional: Local Python Version Override ---
+# Only uncomment this if you explicitly want team members to use their own local Python runtimes
+# .python-version
