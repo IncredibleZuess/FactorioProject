@@ -1,10 +1,10 @@
 """Discrete-Event Simulation Module using SimPy.
 
-Validates analytical LP and queuing solutions under stochastic operational conditions:
-- Poisson/exponential raw material arrival intervals
+Validates analytical LP and queuing solutions under stochastic operating conditions:
+- Poisson and exponential arrival intervals for raw materials
 - Stochastic inserter unloading times
 - Smelting production with machine downtime disruptions
-- Dynamic buffer stock tracking and starvation/stockout risk evaluation
+- Dynamic buffer tracking and starvation risk evaluation
 """
 
 from __future__ import annotations

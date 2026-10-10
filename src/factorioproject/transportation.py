@@ -16,12 +16,12 @@ def solve_transportation_model(
     demand_dict: Optional[Dict[str, float]] = None,
     cost_matrix: Optional[Dict[str, Dict[str, float]]] = None,
 ) -> Dict[str, Any]:
-    """Solve the transportation/assignment problem using PuLP.
+    """Solve the transportation and assignment problem using PuLP.
 
     Args:
-        supply_dict: Maximum extraction/supply rates at each remote patch (items/s)
-        demand_dict: Material demand rates at each factory destination (items/s)
-        cost_matrix: Unit transport/logistics cost ($ per item) from patch i to destination j
+        supply_dict: Extraction rates at each remote patch (items/sec).
+        demand_dict: Demand rates at each factory destination (items/sec).
+        cost_matrix: Unit transport cost ($ per item) from patch i to destination j.
     """
     if supply_dict is None:
         supply_dict = {

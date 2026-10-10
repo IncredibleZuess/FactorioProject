@@ -1,7 +1,7 @@
 """Queuing Theory and Buffer-Stock Inventory Policy Module.
 
-Models factory loading/unloading logistics stations as M/M/1 and M/M/s queuing systems
-to evaluate congestion delays, server utilization, and compute safety stocks and reorder points.
+Models factory logistics stations as M/M/1 and M/M/s queuing systems.
+Evaluates congestion delays, server utilization, safety stocks, and reorder points.
 """
 
 from __future__ import annotations

@@ -21,7 +21,7 @@ def create_factory_network(
 
     intermediate transport, and assembly in the Factorio facility.
 
-    Capacities are specified in items per second.
+    Capacities use units of items per second.
     """
     g = nx.DiGraph()
 
@@ -102,7 +102,7 @@ def solve_max_network_flow(
     source: str = "Super_Source",
     sink: str = "Super_Sink",
 ) -> Tuple[float, Dict[str, Dict[str, float]], Set[str], Set[str]]:
-    """Compute maximum flow and minimum cut partition using Edmonds-Karp/preflow-push."""
+    """Compute maximum flow and minimum cut partition using the Edmonds-Karp algorithm."""
     flow_val, flow_dict = nx.maximum_flow(g, source, sink)
     cut_val, partition = nx.minimum_cut(g, source, sink)
     reachable_s, reachable_t = partition

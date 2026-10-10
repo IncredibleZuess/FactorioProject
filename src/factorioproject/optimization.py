@@ -1,6 +1,6 @@
-"""Linear Programming & Integer Programming for Factory Production Mix and Machine Allocation.
+"""Linear Programming and Integer Programming for Factory Production Mix and Machine Allocation.
 
-Includes post-optimal sensitivity analysis (shadow prices, reduced costs, power budget sweeps).
+Includes dual sensitivity analysis (shadow prices, reduced costs, power budget sweeps).
 """
 
 from __future__ import annotations
@@ -95,28 +95,17 @@ def solve_production_allocation(
     integer_machines: bool = False,
     power_limit: Optional[float] = None,
 ) -> Dict[str, Any]:
-    """Solve the production mix and machine allocation problem using PuLP.
+    """Solve the production mix and machine allocation problem with PuLP.
 
-    Decision Variables:
-      r_iron: Net rate of iron plates produced for export (items/sec)
-      r_copper: Net rate of copper plates produced for export (items/sec)
-      r_steel: Net rate of steel plates produced (items/sec)
-      r_circuits: Net rate of electronic circuits produced (items/sec)
-      r_science: Net rate of automation science packs produced (items/sec)
-
-      m_iron_smelt: Furnaces dedicated to iron plates
-      m_copper_smelt: Furnaces dedicated to copper plates
-      m_steel_smelt: Furnaces dedicated to steel plates
-      m_circuit_cable: Assemblers dedicated to copper cable
-      m_circuits: Assemblers dedicated to electronic circuits
-      m_gear: Assemblers dedicated to iron gear wheels
-      m_science: Assemblers dedicated to automation science
+    Variables:
+    - r_j: Net production rate for each product.
+    - m_i: Machine count allocated to each stage.
 
     Constraints:
-      1. Machine allocation bounds (total furnaces <= 24, total assemblers <= 10)
-      2. Machine capacity constraints linking production rates to allocated machines
-      3. Raw material supply limits (iron ore, copper ore, coal)
-      4. Power grid ceiling: total electric power <= power_limit_kw
+    - Machine limits for furnaces and assemblers.
+    - Capacity bounds linking rates to machines.
+    - Supply limits for iron ore, copper ore, and coal.
+    - Power grid maximum wattage.
     """
     if config is None:
         config = ProductionProblemConfig()

@@ -12,6 +12,7 @@ from factorioproject.blueprint import (
     decode_blueprint,
     encode_blueprint,
     extract_blueprint,
+    generate_metrics_table,
     get_book_blueprints_summary,
     is_blueprint_book,
 )
@@ -49,6 +50,7 @@ __all__ = [
     "encode_blueprint",
     "blueprint_to_dataframe",
     "analyze_blueprint_layout",
+    "generate_metrics_table",
     "FACTORIO_SPECS",
     "ProductionProblemConfig",
     "solve_production_allocation",
